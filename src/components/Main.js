@@ -2,12 +2,9 @@
 import React from 'react';
 import Card from './Card';
 import {CurrentUserContext} from '../contexts/CurrentUserContext';
-import * as auth from './auth.js';
 
 function Main(props) {
-
 const currentUser = React.useContext(CurrentUserContext);
-
   return (
     <main className="content">
       <section className="profile">

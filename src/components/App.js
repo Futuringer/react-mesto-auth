@@ -1,9 +1,9 @@
 import React from 'react';
-import { Route, Switch, Redirect, withRouter,useHistory } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import Header from './Header'
 import Main from './Main'
 import Footer from './Footer'
-import ConfirmationPopup from './ConfirmationPopup';
+import InfoToolTip from './InfoToolTip';
 import PopupWithForm from './PopupWithForm';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
@@ -17,7 +17,9 @@ import ProtectedRoute from './ProtectedRoute';
 import * as auth from './auth.js';
 
 function App() {
-  const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = React.useState(true);
+
+  const [isRegistered, setIsRegistered] = React.useState(false);
+  const [isInfoToolTipOpen,setIsInfoToolTipOpen] = React.useState(false);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
@@ -32,7 +34,8 @@ function closeAllPopups() {
   setIsEditProfilePopupOpen(false);
   setIsAddPlacePopupOpen(false);
   setSelectedCard({name: '', link: ''});
-  setIsConfirmationPopupOpen(false);
+  setIsInfoToolTipOpen(false);
+
 }
 
 function handleCardClick(card){
@@ -51,15 +54,33 @@ function handleAddPlaceClick(){
   setIsAddPlacePopupOpen(true);
 }
 
-function handleSuccessfulRegister(){
-  setIsConfirmationPopupOpen(true);
+function handleInfoTooltipPopupOpen(){
+  setIsInfoToolTipOpen(true);
+}
+
+function handleRegistration(data) {
+  auth.register(data)
+    .then(
+      (data) => {  
+
+        if (data)
+          {setIsRegistered(true);
+          handleInfoTooltipPopupOpen();
+          history.push('/sign-in')}
+        else {
+          console.log('err');
+          setIsRegistered(false);
+          handleInfoTooltipPopupOpen();
+        }
+  },
+)
 }
 
 React.useEffect(()=>{
   api.getUserInfo()
   .then(userData => {
     setCurrentUser(userData)
-   })
+  })
   .catch((err) => {
     console.log(`${err}`);
   });
@@ -98,7 +119,6 @@ function handleAddPlace(cardData){
     console.log(`${err}`);
   });
 }
-
 
 const [cards,setCards] = React.useState([]);
 
@@ -157,9 +177,9 @@ function handleSignOut(){
 }
 
 function handleLogin(){
-setLoggedIn(true)
+setLoggedIn(true);
+history.push("/");
 }
-
 
 React.useEffect(()=>{//перенесли переадресацию сюда из сабмита Логина(не успевал подгрузиться email)
   history.push('/')
@@ -172,13 +192,11 @@ React.useEffect(()=>{//перенесли переадресацию сюда и
         <Header userEmail={userEmail} onSingOut={handleSignOut}/>
         <Switch>
             <Route path="/sign-up">
-              <Register handleSuccessfulRegister={handleSuccessfulRegister}/>
+              <Register onRegistration={handleRegistration}/>
             </Route>
             <Route path="/sign-in">
               <Login handleLogin={handleLogin}/>
             </Route>
-
-
           <ProtectedRoute
             path="/"
             loggedIn={loggedIn}
@@ -193,7 +211,7 @@ React.useEffect(()=>{//перенесли переадресацию сюда и
         />
           </Switch>
           {loggedIn && <Footer/>} 
-        <ConfirmationPopup isOpen={isConfirmationPopupOpen} onClose={closeAllPopups}/>
+        <InfoToolTip isRegistered={isRegistered} isOpen={isInfoToolTipOpen} onClose={closeAllPopups}/>
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/> 
         <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlace}/> 
         <PopupWithForm name="confirm" title="Вы уверены?" buttonText='Вы уверены?'>

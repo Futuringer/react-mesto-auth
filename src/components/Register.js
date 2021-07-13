@@ -1,13 +1,8 @@
 import React from 'react';
-import { Link, withRouter, useHistory } from 'react-router-dom';
-import * as auth from './auth.js';
-//import './styles/Login.css';
 
 function Register(props){
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  let history = useHistory();
-
   function handleEmailChange(e){
     setEmail(e.target.value)
   }
@@ -18,11 +13,8 @@ function Register(props){
 
   function handleSubmit(e){
     e.preventDefault();
-    auth.register(password, email).then((res) => {if(res){
-      props.handleSuccessfulRegister();
-      history.push('/sign-in')}})}
+    props.onRegistration(password,email);}
 
-    
 return (
 <div className="entrance-container">
   <form className="entrance-form" onSubmit={handleSubmit}>

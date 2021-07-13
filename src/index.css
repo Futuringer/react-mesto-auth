@@ -51,4 +51,15 @@
 @import url("./blocks/profile/__avatar-edit-button/profile__avatar-edit-button.css");
 @import url("./blocks/profile/__avatar-hover/profile__avatar-hover.css");
 
+@import url("./blocks/entrance-container/entrance-container.css");
+@import url("./blocks/entrance-form/entrance-form.css");
+@import url("./blocks/entrance-form/__header/entrance-form__header.css");
+@import url("./blocks/entrance-form/__input/entrance-form__input.css");
+@import url("./blocks/entrance-form/__submit-button/entrance-form__submit-button.css");
+@import url("./blocks/entrance-form/__notification/entrance-form__notification.css");
 
+@import url("./blocks/link/link.css");
+
+@import url("./blocks/status-popup/__container/status-popup__container.css");
+@import url("./blocks/status-popup/__image/status-popup__image.css");
+@import url("./blocks/status-popup/__header/status-popup__header.css");

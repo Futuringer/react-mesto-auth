@@ -18,6 +18,13 @@
   }
 }
 
+
+@media screen and (max-width: 767px) {
+  .header__button {
+    margin-right: 19px;
+  }
+}
+
 .header__button{
   font-weight: 400;
   font-style: normal;
