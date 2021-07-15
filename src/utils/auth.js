@@ -18,22 +18,7 @@ export const register = (data) => {
       password: data.password,
       email: data.email,
     }),
-  })
-    .then((res) => {
-      try {
-        if (res.ok) {
-          return res.json();
-        }
-      } catch (e) {
-        return e;
-      }
-    })
-    .then((res) => {
-      if (res.ok) {
-        return res;
-      }
-    })
-    .catch((err) => console.log(err));
+  }).then((res) => handleResponse(res));
 };
 
 export const authorize = (password, email) => {
@@ -47,15 +32,7 @@ export const authorize = (password, email) => {
       password: password,
       email: email,
     }),
-  })
-    .then((res) => handleResponse(res))
-    .then((data) => {
-      if (data.token) {
-        localStorage.setItem("jwt", data.token);
-        return data;
-      }
-    })
-    .catch((err) => console.log(err));
+  }).then((res) => handleResponse(res));
 };
 
 export const getContent = (token) => {
@@ -68,5 +45,4 @@ export const getContent = (token) => {
     },
   })
     .then((res) => handleResponse(res))
-    .then((data) => data);
 };

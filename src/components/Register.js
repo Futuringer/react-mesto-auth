@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
 function Register(props) {
   const [email, setEmail] = React.useState("");
@@ -23,7 +24,7 @@ function Register(props) {
         <input
           className="entrance-form__input"
           placeholder="Email"
-          require
+          required
           name="email"
           type="email"
           value={email}
@@ -47,10 +48,7 @@ function Register(props) {
         </button>
         <p className="entrance-form__notification">
           Уже зарегистрированы?
-          <a className="vector-element-opacity link" link to="/sign-in">
-            {" "}
-            Войти
-          </a>
+          <Link to="/sign-in" className="vector-element-opacity link"> Войти</Link>
         </p>
       </form>
     </div>

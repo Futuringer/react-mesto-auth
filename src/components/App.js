@@ -22,9 +22,11 @@ import * as auth from "../utils/auth.js";
 function App() {
   const [isRegistered, setIsRegistered] = React.useState(false);
   const [isInfoToolTipOpen, setIsInfoToolTipOpen] = React.useState(false);
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
+    React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
+    React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({
     name: "",
     link: "",
@@ -63,17 +65,18 @@ function App() {
   }
 
   function handleRegistration(data) {
-    auth.register(data).then((data) => {
-      if (data) {
+    auth.register(data).then(
+      (data) => {
         setIsRegistered(true);
         handleInfoTooltipPopupOpen();
         history.push("/sign-in");
-      } else {
-        console.log("err");
+      },
+      (err) => {
+        console.log(err);
         setIsRegistered(false);
         handleInfoTooltipPopupOpen();
       }
-    });
+    );
   }
 
   React.useEffect(() => {
@@ -90,7 +93,6 @@ function App() {
   }, [loggedIn]);
 
   function handleUpdateUser(userData) {
-    console.log(userData);
     api
       .setUserInfo(userData)
       .then((res) => {
@@ -188,16 +190,17 @@ function App() {
   }
 
   function handleLogin(password, email) {
-    auth
-      .authorize(password, email)
-      .then((data) => {
-        if (data.token) {
-          setLoggedIn(true);
-          tokenCheck();
-          history.push("/");
-        }
-      })
-      .catch((err) => console.log(err));
+    auth.authorize(password, email).then(
+      (data) => {
+        setLoggedIn(true);
+        localStorage.setItem("jwt", data.token);
+        setUserEmail(email);
+        history.push("/");
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
   return (

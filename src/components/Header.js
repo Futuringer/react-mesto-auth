@@ -8,7 +8,6 @@ function Header(props) {
         <Route exact path="/">
           <div className="header__container">
             <p className="header__Email">{props.userEmail}</p>
-            {console.log(props.userEmail)}
             <Link
               className="header__button header__button_shadowed"
               onClick={props.onSingOut}
