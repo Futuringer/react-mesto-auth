@@ -69,9 +69,9 @@ class Api {
   }
 }
 const api = new Api({
-  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-24",
+  baseUrl: "http://futuringer.nomoredomains.work",
   headers: {
-    authorization: "0308ef52-354f-4228-a90e-eeca2348fa65",
+    //authorization: "0308ef52-354f-4228-a90e-eeca2348fa65",
     "Content-Type": "application/json",
   },
 });

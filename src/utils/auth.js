@@ -1,4 +1,4 @@
-export const BASE_URL = "https://auth.nomoreparties.co";
+export const BASE_URL = "http://futuringer.nomoredomains.work";
 
 function handleResponse(res) {
   if (res.ok) {
@@ -14,6 +14,7 @@ export const register = (data) => {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
+    credentials: 'include',
     body: JSON.stringify({
       password: data.password,
       email: data.email,
@@ -28,6 +29,7 @@ export const authorize = (password, email) => {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
+    credentials: 'include',
     body: JSON.stringify({
       password: password,
       email: email,
@@ -41,7 +43,7 @@ export const getContent = (token) => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      //Authorization: `Bearer ${token}`,
     },
   })
     .then((res) => handleResponse(res))

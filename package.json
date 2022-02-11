@@ -19,7 +19,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "npm run build && scp -r ./build/* futuringer@51.250.18.236:/home/futuringer/mesto-frontend" 
+
   },
   "eslintConfig": {
     "extends": [
